@@ -1,14 +1,14 @@
 import numpy as np
 import random
 import json
-import nltk
+
 import torch
 import torch.nn as nn
+from torch.optim.lr_scheduler import ReduceLROnPlateau
 from torch.utils.data import Dataset, DataLoader
 
 from nltk_utils import bag_of_words, tokenize, stem
 from model import NeuralNet
-
 
 with open('intents.json', 'r') as f:
     intents = json.load(f)
@@ -54,7 +54,7 @@ for (pattern_sentence, tag) in xy:
 X_train = np.array(X_train)
 y_train = np.array(y_train)
 
-# Hyper-parameters 
+# Hyper-parameters
 num_epochs = 1000
 batch_size = 8
 learning_rate = 0.001
@@ -93,6 +93,7 @@ model = NeuralNet(input_size, hidden_size, output_size).to(device)
 # Loss and optimizer
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+schedule = ReduceLROnPlateau(optimizer, 'min')
 
 # Train the model
 for epoch in range(num_epochs):

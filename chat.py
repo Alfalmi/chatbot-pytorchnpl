@@ -49,10 +49,7 @@ while True:
         for item in updates:
             update_id = item["update_id"]
             from_ = item["message"]["from"]["id"]
-            sentence = str(item["message"]["text"])
-            if sentence == "quit":
-                break
-
+            sentence = item["message"]["text"]
             sentence = tokenize(sentence)
             X = bag_of_words(sentence, all_words)
             X = X.reshape(1, X.shape[0])
