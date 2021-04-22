@@ -5,7 +5,7 @@ bot = telegram_chatbot("config.cfg")
 update_id = None
 
 def make_reply(msg):
-    reply = None
+
     if msg is not None:
         reply = str(msg)
     return reply
